@@ -21,43 +21,43 @@ echo -e "$RED ERROR: please use root access"
 else
 echo "root user"
 fi
-dnf module disable nodejs -y
-VALIDATE $? "disable nodejs"
-dnf module enable nodejs:18 -y
+dnf module disable nodejs -y &>> $LOGFILE
+VALIDATE $? "disable nodejs" 
+dnf module enable nodejs:18 -y &>> $LOGFILE
 VALIDATE $? "Enable nodejs18"
-dnf install nodejs -y
+dnf install nodejs -y &>> $LOGFILE
 VALIDATE $? "Installing nodejs18"
 id roboshop
 if [ $id -ne 0 ]
 then
-useradd roboshop
+useradd roboshop &>> $LOGFILE
 VALIDATE $? "Adding roboshop user"
 else
 echo "roboshop user exists $YELLOW .. skipping"
 fi
-mkdir -p /app
-VALIDATE $? "creating directory"
-curl -o /tmp/catalogue.zip https://roboshop-builds.s3.amazonaws.com/catalogue.zip
+mkdir -p /app &>> $LOGFILE
+VALIDATE $? "creating directory" 
+curl -o /tmp/catalogue.zip https://roboshop-builds.s3.amazonaws.com/catalogue.zip &>> $LOGFILE
 VALIDATE $? "downloading application"
-cd /app 
+cd /app &>> $LOGFILE
 VALIDATE $? "changing directory"
-unzip -o /tmp/catalogue.zip
+unzip -o /tmp/catalogue.zip &>> $LOGFILE
 VALIDATE $? "Installing application"
-cd /app
+cd /app &>> $LOGFILE
 VALIDATE $? "changing directory"
-npm install 
+npm install &>> $LOGFILE
 VALIDATE $? "Installing dependencies"
-cp /home/centos/roboshop-shellscript/catalogue.service /etc/systemd/system/catalogue.service
+cp /home/centos/roboshop-shellscript/catalogue.service /etc/systemd/system/catalogue.service &>> $LOGFILE
 VALIDATE $? "creating catalogue service"
-systemctl daemon-reload
+systemctl daemon-reload &>> $LOGFILE
 VALIDATE $? "reloading daemon"
-systemctl enable catalogue
+systemctl enable catalogue &>> $LOGFILE
 VALIDATE $? "Enabling catalogue"
-systemctl start catalogue
+systemctl start catalogue &>> $LOGFILE
 VALIDATE $? "starting catalogue"
-cp /home/centos/mongo.repo /etc/yum.repos.d/mongo.repo
+cp /home/centos/roboshop-shellscript/mongo.repo /etc/yum.repos.d/mongo.repo &>> $LOGFILE
 VALIDATE $? "creating mongo repo"
-dnf install mongodb-org-shell -y
+dnf install mongodb-org-shell -y &>> $LOGFILE
 VALIDATE $? "installing mongo client"
-mongo --host mongodb.jasritha.tech </app/schema/catalogue.js
+mongo --host mongodb.jasritha.tech </app/schema/catalogue.js &>> $LOGFILE
 VALIDATE $? "loading catalogue products"
