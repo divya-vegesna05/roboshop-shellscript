@@ -4,15 +4,15 @@ TIMESTAMP=$(date +%Y-%m-%d-%H-%M-%S)
 LOGFILE="/tmp/$0_$TIMESTAMP.log"
 MONGOD_CONF="/etc/mongod.conf"
 RED="\e[31m"
-GREEN="\e[31m"
+GREEN="\e[32m"
 YELLOW="\e[33m"
 VALIDATE(){
     if [ $1 -ne 0 ]
     then
-      echo -e "$RED Error: $2 failed"
+      echo -e "$RED Error: $2 failed $NORMAL"
       exit 1
     else
-      echo -e "$GREEN: $2 success"
+      echo -e "$GREEN: $2 success $NORMAL"
     fi
 }
 if [ $ID -ne 0 ]
@@ -41,7 +41,7 @@ cd /app
 VALIDATE $? "changing directory"
 npm install 
 VALIDATE $? "Installing dependencies"
-cp /home/centos/catalogue.service /etc/systemd/system/catalogue.service
+cp /home/centos/roboshop-shellscript/catalogue.service /etc/systemd/system/catalogue.service
 VALIDATE $? "creating catalogue service"
 systemctl daemon-reload
 VALIDATE $? "reloading daemon"
