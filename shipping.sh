@@ -21,7 +21,7 @@ echo -e "$RED ERROR: please use root access"
 else
 echo "root user"
 fi
-dnf install maven -y
+dnf install maven -y &>> $LOGFILE
 id roboshop
 if [ $? -ne 0 ]
 then
