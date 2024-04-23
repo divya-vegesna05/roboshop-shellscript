@@ -6,18 +6,19 @@ MONGOD_CONF="/etc/mongod.conf"
 RED="\e[31m"
 GREEN="\e[31m"
 YELLOW="\e[33m"
+NORMAL="\e[0m"
 VALIDATE(){
     if [ $1 -ne 0 ]
     then
-      echo -e "$RED Error: $2 failed"
+      echo -e "$RED Error: $2 failed $NORMAL"
       exit 1
     else
-      echo -e "$GREEN: $2 success"
+      echo -e "$GREEN: $2 success $NORMAL"
     fi
 }
 if [ $ID -ne 0 ]
 then
-echo -e "$RED ERROR: please use root access" 
+echo -e "$RED ERROR: please use root access $NORMAL" 
 else
 echo "root user"
 fi
