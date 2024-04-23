@@ -21,15 +21,15 @@ echo -e "$RED ERROR: please use root access"
 else
 echo "root user"
 fi
-dnf install https://rpms.remirepo.net/enterprise/remi-release-8.rpm -y
+dnf install https://rpms.remirepo.net/enterprise/remi-release-8.rpm -y &>> $LOGFILE
 VALIDATE $? "creating redis repository"
-dnf module enable redis:remi-6.2 -y
+dnf module enable redis:remi-6.2 -y &>> $LOGFILE
 VALIDATE $? "enabling redis module"
-dnf install redis -y
+dnf install redis -y &>> $LOGFILE
 VALIDATE $? "installing redis"
 sed -i 's/127.0.0.1/0.0.0.0/g' $REDIS_CONF &>> $LOGFILE
 VALIDATE $? "changing to all access for redis"
-systemctl enable redis
+systemctl enable redis &>> $LOGFILE
 VALIDATE $? "enabling redis"
-systemctl start redis
+systemctl start redis &>> $LOGFILE
 VALIDATE $? "starting redis"
