@@ -27,15 +27,21 @@ dnf module enable nodejs:18 -y
 VALIDATE $? "Enable nodejs18"
 dnf install nodejs -y
 VALIDATE $? "Installing nodejs18"
+id roboshop
+if [ $id -ne 0 ]
+then
 useradd roboshop
 VALIDATE $? "Adding roboshop user"
-mkdir /app
+else
+echo "roboshop user exists $YELLOW .. skipping"
+fi
+mkdir -p /app
 VALIDATE $? "creating directory"
 curl -o /tmp/catalogue.zip https://roboshop-builds.s3.amazonaws.com/catalogue.zip
 VALIDATE $? "downloading application"
 cd /app 
 VALIDATE $? "changing directory"
-unzip /tmp/catalogue.zip
+unzip -o /tmp/catalogue.zip
 VALIDATE $? "Installing application"
 cd /app
 VALIDATE $? "changing directory"
