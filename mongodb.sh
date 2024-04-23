@@ -4,16 +4,16 @@ TIMESTAMP=$(date +%Y-%m-%d-%H-%M-%S)
 LOGFILE="/tmp/$0_$TIMESTAMP.log"
 MONGOD_CONF="/etc/mongod.conf"
 RED="\e[31m"
-GREEN="\e[31m"
+GREEN="\e[32m"
 YELLOW="\e[33m"
 NORMAL="\e[0m"
 VALIDATE(){
     if [ $1 -ne 0 ]
     then
-      echo -e "$RED Error: $2 failed $NORMAL"
+      echo -e "$RED Error: $2... failed $NORMAL"
       exit 1
     else
-      echo -e "$GREEN: $2 success $NORMAL"
+      echo -e "$GREEN: $2....success $NORMAL"
     fi
 }
 if [ $ID -ne 0 ]
